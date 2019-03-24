@@ -91,7 +91,7 @@ Exchange Management Console includes a lot of data structures which do not exist
 
 ### Final words
 
-I am happy about how this functions work. However, the use of the `[Microsoft.Exchange.Data.IPRange]` structure is most likely the reason, why this code will not work for Exchange Online.
+I am happy about how these functions work. However, the use of the `[Microsoft.Exchange.Data.IPRange]` structure is most likely the reason, why this code will not work for Exchange Online.
 I have not tried, yet, but I expect it just like any other `[Microsoft.Exchange...]` structure to not exist in imported exchange sessions (which the EOL console is).
 
 I will update the function for EOL compatibility as my time allows.
