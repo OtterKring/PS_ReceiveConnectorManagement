@@ -20,7 +20,7 @@ You want to know, if an IP address or -range (or several of them) are included i
 
     '10.0.0.1','128.32.62.0/28','192.168.0.10-192.168.0.15' | Test-ReceiveConnectorRemoteIPRange
 
-... will test the IP address ranges you provide against all your Receive Connectors and return those connectors and their IPv4 RemoteIPRanges where your ranges are included.
+... will test the IP address ranges you provide against all your Receive Connectors and return those connectors and their IPv4 RemoteIPRanges where your ranges overlap or match with an already listed one.
 As you can see in the second example you can provide a single IP address, a simple dash connected range or a CIDR notated range. The function can detect and handle all of them.
 
 *NOTE: This function works for Exchange Management Console (Exchange on-premise) only!*
@@ -75,19 +75,20 @@ Btw ... the `foreach ($element in $list)` loop is also faster than the so widely
 
 #### 2) Use of "native" data format
 
-Exchange Management Console includes a lot of data structures which do not exist in imported sessions or standard powershell consoles. Just like `Get-Mailbox mcfly | Select-Object -ExpandProperty EmailAddresses` suddenly results in a lot more information than you might have asked for in EMC, the same is true for `Get-ReceiveConnector 'EXC01/RC01' | Select-Object -ExpandProperty RemoteIPRanges`. The resulting data is not just simple IP ranges, but a new sub-structure. Further investigation with `Get-Member` reveils that we are talking about `[Microsoft.Exchange.Data.IPRange]` which to my big pleasure als provides additional functions for dealing with IP address ranges, like ...
+Exchange Management Console includes a lot of data structures which do not exist in imported sessions or standard powershell consoles. Just like `Get-Mailbox mcfly | Select-Object -ExpandProperty EmailAddresses` suddenly results in a lot more information than you might have asked for in EMC, the same is true for `Get-ReceiveConnector 'EXC01/RC01' | Select-Object -ExpandProperty RemoteIPRanges`. The resulting data is not just simple IP ranges, but a new sub-structure. Further investigation with `Get-Member` reveils that we are talking about `[Microsoft.Exchange.Data.IPRange]` which to my big pleasure also provides additional functions for dealing with IP address ranges, like ...
 
     [Microsoft.Exchange.Data.IPRange]::Parse()
 
 ... and a lot of others.
 
-*NOTE TO MICROSOFT: Why is such a useful class for dealing with IP address not availble in general .Net? I searched a long time and only found instructions on how to build your own IP address manipulations classes.*
+*NOTE TO MICROSOFT: Why is such a useful class for dealing with IP address not available in general .Net? I searched a long time and only found instructions on how to build your own IP address manipulations classes.*
 
 `Parse()` is a great method:
 - it checks your string for being a valid IPv4 address
 - and transforms it to a `[Microsoft.Exchange.Data.IPRange]` data object, the native format for Exchange, including the calculation of bottom and top address of your provided range. This again eases up checking the new range against the already existing list A LOT!
 <br>
 <br>
+
 ### Final words
 
 I am happy about how this functions work. However, the use of the `[Microsoft.Exchange.Data.IPRange]` structure is most likely the reason, why this code will not work for Exchange Online.
