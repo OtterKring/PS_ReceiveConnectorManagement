@@ -88,17 +88,8 @@ Exchange Management Console includes a lot of data structures which do not exist
 - and transforms it to a `[Microsoft.Exchange.Data.IPRange]` data object, the native format for Exchange, including the calculation of bottom and top address of your provided range. This again eases up checking the new range against the already existing list A LOT!
 <br>
 <br>
-
-### Final words
-
-I am happy about how these functions work. However, the use of the `[Microsoft.Exchange.Data.IPRange]` structure is most likely the reason, why this code will not work for Exchange Online.
-I have not tried, yet, but I expect it just like any other `[Microsoft.Exchange...]` structure to not exist in imported exchange sessions (which the EOL console is).
-
-I will update the function for EOL compatibility as my time allows.
 <br>
-<br>
-<br>
-In the meantime, I hope these little helpers can help you, too.
+I hope these little helpers can help you, too.
 Happy coding!
 
 Max.
