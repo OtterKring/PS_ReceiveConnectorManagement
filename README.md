@@ -71,7 +71,7 @@ The "+=" operator is about the slowest option for adding elements to a collectio
 
 It might take a bit more thinking about your code using these methods over the "+=" operator, but if you want your code to be reused by others, you never know how much data they will push over the pipeline or how often your function will be called in a loop. You will do them and in the end yourself a favor in saving execution time where you can.
 
-Btw ... the `foreach ($element in $list)` loop is also faster than the so widely spread use of `$list | foreach-Object {...}`. If you are looking for speed, I'd generally try to avoid the pipeline within a function or script.
+Btw ... the `foreach ($element in $list)` loop is also faster than the so widely spread use of `$list | foreach-Object {...}`. If you are looking for speed, I'd generally try to avoid the pipeline within a function or script if no external system calls are involved (they are always slow).
 
 #### 2) Use of "native" data format
 
